@@ -12,6 +12,6 @@ export default class Order implements Entity {
     }
 
     getTotalPrice(): number {
-        return 0;
+        return this.products.map((p) => p.price).reduce((a, b) => a + b);
     }
 }
