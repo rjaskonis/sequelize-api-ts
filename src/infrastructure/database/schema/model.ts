@@ -1,11 +1,7 @@
 import { Sequelize, DataTypes, ModelCtor, Model } from "sequelize";
 
 export default class SchemaModel {
-    constructor(
-        private modelName: string,
-        private tableName: string,
-        private structure: object
-    ) {}
+    constructor(private modelName: string, private tableName: string, private structure: object) {}
 
     bind(sequelize: Sequelize): ModelCtor<Model<object, object>> {
         const Model = sequelize.define(
