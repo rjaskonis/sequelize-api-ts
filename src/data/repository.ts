@@ -8,11 +8,13 @@ export default interface Repository {
 
     read?: (path: string) => Promise<any>;
 
-    store?: (param: Entity | Interactor.Data) => Promise<any>;
+    create: (object: Entity | Interactor.Data) => Promise<any>;
 
-    delete?: (param: Entity | Interactor.Data) => Promise<any>;
+    update: (object: Entity | Interactor.Data, param?: any) => Promise<any>;
 
-    findAll?: () => Promise<Array<any>>;
+    delete?: (object: Entity | Interactor.Data) => Promise<any>;
 
-    findOne?: (lambda: any) => Promise<any>;
+    findAll: (param?: any) => Promise<Array<any>>;
+
+    findOne: (lambda: any) => Promise<any>;
 }

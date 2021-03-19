@@ -3,7 +3,7 @@ import { Entity } from "@domain/entity";
 export default interface Interactor {
     query: (command: string) => Promise<any>;
 
-    findAll: () => Promise<Array<Entity>>;
+    findAll: (param?: object) => Promise<Array<Entity>>;
 
     findOne: (param: any) => Promise<any>;
 
