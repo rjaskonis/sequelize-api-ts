@@ -27,15 +27,11 @@ const structure = {
         allowNull: false,
     },
     photo: {
-        type: DataTypes.STRING(200),
+        type: DataTypes.BLOB("medium"),
         allowNull: true,
     },
 };
 
-const schemaModel: SchemaModel = new SchemaModel(
-    modelName,
-    tableName,
-    structure
-);
+const schemaModel: SchemaModel = new SchemaModel(modelName, tableName, structure);
 
 export default schemaModel;
