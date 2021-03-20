@@ -30,9 +30,7 @@ export default class ProductInteractor implements Interactor {
         }
     }
 
-    async delete(product: Product | undefined): Promise<void> {
-        if (this.repository.delete && product) {
-            return this.repository.delete({ where: { id: product.id } });
-        }
+    async delete(param?: object): Promise<void> {
+        return this.repository.update({ _deleted: true }, param);
     }
 }
