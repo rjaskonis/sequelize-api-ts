@@ -1,15 +1,12 @@
 import request from "supertest";
-import { Sequelize } from "sequelize";
 import app from "@http/application";
 import Product from "@domain/entities/product";
 import ProductInteractor from "@domain/usecases/product.interactor";
 import SequelizeAdapter from "@data/adapters/sequelize";
-import databaseSettings from "@infrastructure/database/instances/settings";
-import productSchemaModel from "@infrastructure/database/schema/models/product";
 
 describe("Product endpoints", () => {
-    const databaseConnection = new Sequelize(databaseSettings);
-    const repository: SequelizeAdapter = new SequelizeAdapter(databaseConnection, productSchemaModel);
+    const database = app.get("DATABASE");
+    const repository: SequelizeAdapter = new SequelizeAdapter(database["Product"]);
     const interactor: ProductInteractor = new ProductInteractor(repository);
 
     it("should get all products - GET /api/products - success", async () => {
@@ -21,9 +18,18 @@ describe("Product endpoints", () => {
 
         expect(status).toBe(200);
         expect(body).toEqual([
-            { _deleted: 0, id: 1, title: "Banana", description: "Yellow fruit", price: 1, manufacturer: "Nature", inventory: 10, photo: null },
-            { _deleted: 0, id: 2, title: "Apple", description: "Red fruit", price: 1, manufacturer: "Nature", inventory: 5, photo: null },
-            { _deleted: 0, id: 3, title: "Grape", description: "Purple fruit", price: 1, manufacturer: "Nature", inventory: 8, photo: null },
+            {
+                _deleted: false,
+                id: 1,
+                title: "Banana",
+                description: "Yellow fruit",
+                price: 1,
+                manufacturer: "Nature",
+                inventory: 10,
+                photo: null,
+            },
+            { _deleted: false, id: 2, title: "Apple", description: "Red fruit", price: 1, manufacturer: "Nature", inventory: 5, photo: null },
+            { _deleted: false, id: 3, title: "Grape", description: "Purple fruit", price: 1, manufacturer: "Nature", inventory: 8, photo: null },
         ]);
     });
 
@@ -32,8 +38,8 @@ describe("Product endpoints", () => {
 
         expect(status).toBe(200);
         expect(body).toEqual([
-            { _deleted: 0, id: 2, title: "Apple", description: "Red fruit", price: 1, manufacturer: "Nature", inventory: 5, photo: null },
-            { _deleted: 0, id: 3, title: "Grape", description: "Purple fruit", price: 1, manufacturer: "Nature", inventory: 8, photo: null },
+            { _deleted: false, id: 2, title: "Apple", description: "Red fruit", price: 1, manufacturer: "Nature", inventory: 5, photo: null },
+            { _deleted: false, id: 3, title: "Grape", description: "Purple fruit", price: 1, manufacturer: "Nature", inventory: 8, photo: null },
         ]);
     });
 
@@ -42,7 +48,7 @@ describe("Product endpoints", () => {
 
         expect(status).toBe(200);
         expect(body).toEqual({
-            _deleted: 0,
+            _deleted: false,
             id: 2,
             title: "Apple",
             description: "Red fruit",

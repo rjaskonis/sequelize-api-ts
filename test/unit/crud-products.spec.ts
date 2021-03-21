@@ -3,11 +3,12 @@ import Product from "@domain/entities/product";
 import ProductInteractor from "@domain/usecases/product.interactor";
 import SequelizeAdapter from "@data/adapters/sequelize";
 import databaseSettings from "@infrastructure/database/instances/settings";
-import productSchemaModel from "@infrastructure/database/schema/models/product";
+import { bindModels } from "@infrastructure/database/schema";
 
 describe("Product creation in database", () => {
     const databaseConnection = new Sequelize(databaseSettings);
-    const repository: SequelizeAdapter = new SequelizeAdapter(databaseConnection, productSchemaModel);
+    const database = bindModels(databaseConnection);
+    const repository: SequelizeAdapter = new SequelizeAdapter(database["Product"]);
     const interactor: ProductInteractor = new ProductInteractor(repository);
 
     it("should create a product titled 'Banana'", async () => {
