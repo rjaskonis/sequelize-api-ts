@@ -1,10 +1,10 @@
 import { Sequelize, DataTypes, ModelCtor, Model } from "sequelize";
 
 export default class SchemaModel {
-    constructor(private modelName: string, private tableName: string, private structure: object) {}
+    constructor(public modelName: string, private tableName: string, private structure: object, private associate?: (db: any) => void) {}
 
     bind(sequelize: Sequelize): ModelCtor<Model<object, object>> {
-        const Model = sequelize.define(
+        const Model: any = sequelize.define(
             this.modelName,
             {
                 ...this.structure,
@@ -26,6 +26,10 @@ export default class SchemaModel {
 
         Model.prototype.undelete = function () {
             return this.update({ _deleted: false });
+        };
+
+        Model.associate = (db: any) => {
+            if (this.associate) this.associate(db);
         };
 
         return Model;

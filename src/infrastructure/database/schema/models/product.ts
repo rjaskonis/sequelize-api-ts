@@ -1,8 +1,8 @@
-import { DataTypes } from "sequelize";
+import { DataTypes, ModelCtor, Model, Sequelize } from "sequelize";
 import SchemaModel from "@infrastructure/database/schema/model";
 
+const modelName = "Product";
 const tableName = "products";
-const modelName = tableName;
 
 const structure = {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -32,6 +32,18 @@ const structure = {
     },
 };
 
-const schemaModel: SchemaModel = new SchemaModel(modelName, tableName, structure);
+function associate(db: any): void {
+    const Product: ModelCtor<Model<object, object>> = db["Product"];
+    const Order: ModelCtor<Model<object, object>> = db["Order"];
+    const OrderProduct: ModelCtor<Model<object, object>> = db["OrderProduct"];
+
+    Product.belongsToMany(Order, {
+        through: OrderProduct,
+        foreignKey: "product_id",
+        otherKey: "order_id",
+    });
+}
+
+const schemaModel: SchemaModel = new SchemaModel(modelName, tableName, structure, associate);
 
 export default schemaModel;
