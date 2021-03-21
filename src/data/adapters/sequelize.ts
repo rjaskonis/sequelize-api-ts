@@ -5,22 +5,14 @@ import { Entity } from "@domain/entity";
 import { Interactor } from "@domain/interactor";
 
 export default class SequelizeAdapter implements Repository {
-    model: ModelCtor<Model<object, object>>;
-
-    constructor(private readonly connection: Sequelize, private schemaModel: SchemaModel) {
-        this.model = schemaModel.bind(connection);
-    }
-
-    execute: (command: string) => Promise<void>;
-
-    query?: (command: string) => Promise<any>;
+    constructor(private readonly model: ModelCtor<Model<object, object>>) {}
 
     async findAll(param: object = {}): Promise<Array<any>> {
-        return this.model.findAll({ ...param, raw: true });
+        return this.model.findAll(param);
     }
 
     async findOne(param: any): Promise<any> {
-        return this.model.findOne({ ...param, raw: true });
+        return this.model.findOne(param);
     }
 
     async create(data: Entity): Promise<object> {
