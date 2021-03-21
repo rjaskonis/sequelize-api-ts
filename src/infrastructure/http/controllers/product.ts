@@ -2,12 +2,12 @@ import { Request, Response } from "express";
 import Product from "@domain/entities/product";
 import ProductInteractor from "@domain/usecases/product.interactor";
 import SequelizeAdapter from "@data/adapters/sequelize";
-import productSchemaModel from "@infrastructure/database/schema/models/product";
 
 let interactor: ProductInteractor;
 
 export async function findProducts(req: Request, res: Response) {
-    const repository = new SequelizeAdapter(req.app.get("DATABASE_CONNECTION"), productSchemaModel);
+    const database = req.app.get("DATABASE");
+    const repository = new SequelizeAdapter(database["Product"]);
 
     interactor = interactor || new ProductInteractor(repository);
 
@@ -19,7 +19,8 @@ export async function findProducts(req: Request, res: Response) {
 }
 
 export async function findProductById(req: Request, res: Response) {
-    const repository = new SequelizeAdapter(req.app.get("DATABASE_CONNECTION"), productSchemaModel);
+    const database = req.app.get("DATABASE");
+    const repository = new SequelizeAdapter(database["Product"]);
 
     interactor = interactor || new ProductInteractor(repository);
 
@@ -29,7 +30,8 @@ export async function findProductById(req: Request, res: Response) {
 }
 
 export async function createProduct(req: Request, res: Response) {
-    const repository = new SequelizeAdapter(req.app.get("DATABASE_CONNECTION"), productSchemaModel);
+    const database = req.app.get("DATABASE");
+    const repository = new SequelizeAdapter(database["Product"]);
 
     interactor = interactor || new ProductInteractor(repository);
 
@@ -47,7 +49,8 @@ export async function createProduct(req: Request, res: Response) {
 }
 
 export async function updateProduct(req: Request, res: Response) {
-    const repository = new SequelizeAdapter(req.app.get("DATABASE_CONNECTION"), productSchemaModel);
+    const database = req.app.get("DATABASE");
+    const repository = new SequelizeAdapter(database["Product"]);
 
     interactor = interactor || new ProductInteractor(repository);
 
@@ -67,7 +70,8 @@ export async function updateProduct(req: Request, res: Response) {
 }
 
 export async function deleteProduct(req: Request, res: Response) {
-    const repository = new SequelizeAdapter(req.app.get("DATABASE_CONNECTION"), productSchemaModel);
+    const database = req.app.get("DATABASE");
+    const repository = new SequelizeAdapter(database["Product"]);
 
     interactor = interactor || new ProductInteractor(repository);
 

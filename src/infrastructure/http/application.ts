@@ -8,9 +8,10 @@ dotenv.config();
 
 import express, { Application } from "express";
 import compression from "compression";
-import { productRouter } from "@http/routes";
-import databaseSettings from "@infrastructure/database/instances/settings";
 import { Sequelize } from "sequelize";
+import { productRouter, orderRouter } from "@http/routes";
+import databaseSettings from "@infrastructure/database/instances/settings";
+import { bindModels } from "@infrastructure/database/schema";
 
 const app: Application = express();
 const PORT = process.env.PORT;
@@ -21,11 +22,13 @@ app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use(express.json({ limit: "100mb" }));
 app.use(express.static(PUBLIC_PATH));
 app.use(productRouter);
+app.use(orderRouter);
 
 const databaseConnection = new Sequelize(databaseSettings);
 
 app.set("PORT", PORT);
 app.set("DATABASE_CONNECTION", databaseConnection);
+app.set("DATABASE", bindModels(databaseConnection));
 app.set("SUPERSECRET_KEY", process.env.SUPERSECRET_KEY);
 
 export default app;
