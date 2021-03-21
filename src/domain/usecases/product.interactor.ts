@@ -5,11 +5,6 @@ import Repository from "@/data/repository";
 export default class ProductInteractor implements Interactor {
     constructor(private readonly repository: Repository) {}
 
-    async query(command: string): Promise<Array<Product>> {
-        if (this.repository.query) return this.repository.query(command);
-        else return [];
-    }
-
     async findAll(param?: object): Promise<Array<Product>> {
         return this.repository.findAll(param);
     }
