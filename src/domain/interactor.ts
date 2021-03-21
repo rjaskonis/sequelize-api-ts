@@ -1,7 +1,7 @@
 import { Entity } from "@domain/entity";
 
 export default interface Interactor {
-    query: (command: string) => Promise<any>;
+    query?: (command: string) => Promise<any>;
 
     findAll: (param?: object) => Promise<Array<Entity>>;
 
