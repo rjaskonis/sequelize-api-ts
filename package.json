@@ -31,9 +31,10 @@
         "typescript": "^4.1.3"
     },
     "scripts": {
+        "migrate:production": "NODE_ENV=production npx sequelize db:migrate",
         "build": "tsc --build build.json",
-        "start": "npm run build && node dist/app.js",
-        "dev": "NODE_ENV=development ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/app.ts",
+        "start:docker": "npm run build && docker-compose up --build",
+        "start": "NODE_ENV=production node dist/infrastructure/http/server.js",
         "pretest": "NODE_ENV=test sequelize db:migrate:undo:all > \"/dev/null\" 2>&1 && sequelize db:migrate > \"/dev/null\" 2>&1",
         "test": "jest"
     },
