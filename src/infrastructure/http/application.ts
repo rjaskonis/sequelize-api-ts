@@ -14,7 +14,7 @@ import databaseSettings from "@infrastructure/database/instances/settings";
 import { bindModels } from "@infrastructure/database/schema";
 
 const app: Application = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3003;
 const PUBLIC_PATH = path.resolve("public");
 
 app.use(compression({ threshold: 0, filter: () => true }));
