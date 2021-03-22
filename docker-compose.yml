@@ -9,3 +9,5 @@ services:
             - 3003:3003
         environment:
             - PORT=3003
+        volumes:
+            - "~/database:/app/database"

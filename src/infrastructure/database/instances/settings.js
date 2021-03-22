@@ -9,7 +9,7 @@ const environments = {
     },
     production: {
         dialect: "sqlite",
-        storage: "dist/production.db",
+        storage: "database/production.db",
         logging: false,
     },
 };
