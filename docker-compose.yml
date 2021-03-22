@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    rjaskonis_ts_api:
+        container_name: rjaskonis_ts_api
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 3003:3003
+        environment:
+            - PORT=3003
